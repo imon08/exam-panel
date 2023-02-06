@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .navButtons {
+    @apply bg-blue-400 w-24 text-center text-white text-sm rounded-sm flex justify-center items-center cursor-pointer;
+  }
+}
