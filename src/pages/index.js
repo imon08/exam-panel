@@ -9,7 +9,7 @@ export default function Home() {
     <div className="h-screen">
       <Header />
       <div className="flex justify-between w-full">
-        <div className="w-[70%]">
+        <div className="w-[70%] md:w-[85%]">
           <Navbar />
           <QuestionSection />
         </div>
