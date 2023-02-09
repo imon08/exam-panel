@@ -7,10 +7,9 @@ export default function Home() {
     <div>
       <Header />
       <div className="flex justify-between w-full">
-        <Navbar />        
+        <Navbar />
         <RightSideBar />
       </div>
-      
     </div>
   );
 }

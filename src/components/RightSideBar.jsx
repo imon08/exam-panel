@@ -1,8 +1,19 @@
 import React from "react";
 import Profile from "../assets/profilePic.jpg";
+import { useSelector } from "react-redux";
+import { getColors } from "@/slices/colorSlice";
 
 const RightSideBar = () => {
-  const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const colors = useSelector(getColors);
+
+  const getTotal = (input) => {
+    let count = 0;
+    colors.map((item) => {
+      if (item.status === input) count += 1;
+    });
+    return count;
+  };
+
   return (
     <div className="border-2 w-[30%]  md:w-[13%]">
       <div className="bg-blue-100 pb-3 border-2 border-gray-400 pl-1 rounded-md">
@@ -10,11 +21,11 @@ const RightSideBar = () => {
       </div>
       <div className="rounded-md border-gray-400 border-2 mt-2 overflow-hidden h-72">
         <div className="bg-[#55a0b5] px-2 py text-white">Question Pallete</div>
-        <div className="flex flex-wrap justify-center">
-          {array.map((item) => {
+        <div className="flex flex-wrap justify-center gap-1">
+          {colors.map((item) => {
             return (
-              <button className="px-3 py-1 bg-gray-200 w-9 text-center">
-                {item}
+              <button className="px-4 py-1 bg-gray-200 w-9 flex justify-center">
+                {item.no}
               </button>
             );
           })}
@@ -35,12 +46,16 @@ const RightSideBar = () => {
             Review+Ans
           </div>
           <div className="w-[50%] bg-yellow-300 text-center m-1">
-            Review-Ans
+            {getTotal("dump")} Review-Ans
           </div>
         </div>
         <div className="flex">
-          <div className="w-[50%] bg-gray-300 text-center m-1">Dump</div>
-          <div className="w-[50%] bg-white-300 text-center m-1">No Visit</div>
+          <div className="w-[50%] bg-gray-300 text-center m-1">
+            {getTotal("dump")} Dump
+          </div>
+          <div className="w-[50%] bg-white-300 text-center m-1">
+            {getTotal("noVisits")} No Visit
+          </div>
         </div>
         <div className="bg-[#55a0b5] px-2 py text-white">All Questions</div>
         <div className="bg-blue-100 py-1 h-20 flex flex-wrap items-center">
