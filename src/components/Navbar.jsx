@@ -10,7 +10,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-[75%] flex gap-1 px-1 m-1">
+    <div className="w-[75%] flex gap-1 px-1 pt-1 h-8">
       <p
         className="navButtons"
         onClick={() => {
