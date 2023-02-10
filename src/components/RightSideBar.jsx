@@ -24,7 +24,10 @@ const RightSideBar = () => {
         <div className="flex flex-wrap justify-evenly gap-1">
           {colors.map((item) => {
             return (
-              <button className="px-4 py-1 bg-gray-200 w-9 flex justify-center">
+              <button
+                key={item.no}
+                className="px-4 py-1 bg-gray-200 w-9 flex justify-center"
+              >
                 {item.no}
               </button>
             );
@@ -37,10 +40,10 @@ const RightSideBar = () => {
         </div>
         <div className="flex">
           <div className="w-[50%] bg-green-300 text-center m-1 text-sm">
-          {getTotal("answer")} Answer
+            {getTotal("answer")} Answer
           </div>
           <div className="w-[50%] bg-red-300 text-center m-1 text-sm ">
-          {getTotal("noAnswer")} No Answer
+            {getTotal("noAnswer")} No Answer
           </div>
         </div>
         <div className="flex">

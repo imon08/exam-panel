@@ -9,11 +9,11 @@ export default function Home() {
     <div className="h-screen">
       <Header />
       <div className="flex justify-between w-full">
-        <div className="w-[70%] md:w-[85%]">
+        <div className="w-[70%] lg:w-[85%]">
           <Navbar />
           <QuestionSection />
         </div>
-        <div className="w-[30%] md:w-[15%]">
+        <div className="w-[30%] lg:w-[15%]">
           <RightSideBar />
         </div>
       </div>

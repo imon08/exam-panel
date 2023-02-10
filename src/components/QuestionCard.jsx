@@ -1,12 +1,28 @@
+import { getColors } from "@/slices/colorSlice";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const QuestionCard = ({ questionNo, question }) => {
+const QuestionCard = ({ question }) => {
+  const dispatch = useDispatch();
+  const colors = useSelector(getColors);
+
+  const handleChange = (answer) => {
+    console.log(answer)
+    const newColors = colors.map((obj) => {
+      if (obj.no === question.no) {
+        return { ...obj, studentAnswer: answer };
+      }
+      return obj;
+    });
+    dispatch(setAllColors(newColors));s
+  };
+
   return (
     <div>
       <div className="flex justify-between bg-[#4682B4] text-white p-1">
-        <p>Q No. {questionNo}</p>
+        <p>Q No. {question.no}</p>
         <div>
-          <label for="language">Choose a car: </label>
+          <label htmlFor="language">Choose a language: </label>
           <select
             name="language"
             className="bg-white border-2 border-gray-600 text-black overflow-hidden"
@@ -25,19 +41,39 @@ const QuestionCard = ({ questionNo, question }) => {
           <p>QUESTION</p>
           <p>{question.question}</p>
           <div className="flex items-center gap-2">
-            <input id="option1" type="radio" name={question.no} />
+            <input
+              onChange={()=>handleChange(1)}
+              id="option1"
+              type="radio"
+              name={question.no}
+            />
             <label htmlFor="option1">{question.options[0]}</label>
           </div>
           <div className="flex items-center gap-2">
-            <input id="option2" type="radio" name={question.no} />
+            <input
+              onChange={()=>handleChange(2)}
+              id="option2"
+              type="radio"
+              name={question.no}
+            />
             <label htmlFor="option2">{question.options[1]}</label>
           </div>
           <div className="flex items-center gap-2">
-            <input id="option3" type="radio" name={question.no} />
+            <input
+              onChange={()=>handleChange(3)}
+              id="option3"
+              type="radio"
+              name={question.no}
+            />
             <label htmlFor="option3">{question.options[2]}</label>
           </div>
           <div className="flex items-center gap-2">
-            <input id="option4" type="radio" name={question.no} />
+            <input
+              onChange={()=>handleChange(4)}
+              id="option4"
+              type="radio"
+              name={question.no}
+            />
             <label htmlFor="option4">{question.options[3]}</label>
           </div>
         </div>
