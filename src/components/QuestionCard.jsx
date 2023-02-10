@@ -1,20 +1,32 @@
-import { getColors } from "@/slices/colorSlice";
-import React from "react";
+import { getColors, setAllColors } from "@/slices/colorSlice";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const QuestionCard = ({ question }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const dispatch = useDispatch();
   const colors = useSelector(getColors);
 
+  useEffect(() => {
+    const prevChoice = colors.find((item) => {
+      return item.no === question.no;
+    });
+    if (prevChoice?.studentAnswer) {
+      setSelectedOption(prevChoice.studentAnswer);
+    } else {
+      setSelectedOption(null);
+    }
+  }, [question.no, colors]);
+
   const handleChange = (answer) => {
-    console.log(answer)
+    setSelectedOption(answer);
     const newColors = colors.map((obj) => {
       if (obj.no === question.no) {
         return { ...obj, studentAnswer: answer };
       }
       return obj;
     });
-    dispatch(setAllColors(newColors));s
+    dispatch(setAllColors(newColors));
   };
 
   return (
@@ -42,37 +54,37 @@ const QuestionCard = ({ question }) => {
           <p>{question.question}</p>
           <div className="flex items-center gap-2">
             <input
-              onChange={()=>handleChange(1)}
+              onChange={() => handleChange(1)}
               id="option1"
               type="radio"
-              name={question.no}
+              checked={selectedOption === 1}
             />
             <label htmlFor="option1">{question.options[0]}</label>
           </div>
           <div className="flex items-center gap-2">
             <input
-              onChange={()=>handleChange(2)}
+              onChange={() => handleChange(2)}
               id="option2"
               type="radio"
-              name={question.no}
+              checked={selectedOption === 2}
             />
             <label htmlFor="option2">{question.options[1]}</label>
           </div>
           <div className="flex items-center gap-2">
             <input
-              onChange={()=>handleChange(3)}
+              onChange={() => handleChange(3)}
               id="option3"
               type="radio"
-              name={question.no}
+              checked={selectedOption === 3}
             />
             <label htmlFor="option3">{question.options[2]}</label>
           </div>
           <div className="flex items-center gap-2">
             <input
-              onChange={()=>handleChange(4)}
+              onChange={() => handleChange(4)}
               id="option4"
               type="radio"
-              name={question.no}
+              checked={selectedOption === 4}
             />
             <label htmlFor="option4">{question.options[3]}</label>
           </div>

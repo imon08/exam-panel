@@ -1,10 +1,16 @@
 import React from "react";
 import Profile from "../assets/profilePic.jpg";
-import { useSelector } from "react-redux";
-import { getColors } from "@/slices/colorSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getActiveQuestion,
+  getColors,
+  setActiveQuestion,
+} from "@/slices/colorSlice";
 
 const RightSideBar = () => {
   const colors = useSelector(getColors);
+  const currentQ = useSelector(getActiveQuestion);
+  const dispatch = useDispatch();
 
   const getTotal = (input) => {
     let count = 0;
@@ -12,6 +18,15 @@ const RightSideBar = () => {
       if (item.status === input) count += 1;
     });
     return count;
+  };
+
+  const statusColor = (status) => {
+    if (status === "answer") return "bg-green-200";
+    else if (status === "noAnswer") return "bg-red-200";
+    else if (status === "review+ans") return "bg-purple-200";
+    else if (status === "review-ans") return "bg-yellow-200";
+    else if (status === "dump") return "bg-gray-200";
+    else if (status === "noVisits") return "bg-white-200";
   };
 
   return (
@@ -25,8 +40,11 @@ const RightSideBar = () => {
           {colors.map((item) => {
             return (
               <button
+                onClick={() => dispatch(setActiveQuestion(item.no))}
                 key={item.no}
-                className="px-4 py-1 bg-gray-200 w-9 flex justify-center"
+                className={`px-4 py-1 ${statusColor(item.status)} ${
+                  currentQ === item.no ? "border-2 boder-black" : ""
+                } w-9 flex justify-center`}
               >
                 {item.no}
               </button>
@@ -51,7 +69,7 @@ const RightSideBar = () => {
             {getTotal("review+ans")} Review+Ans
           </div>
           <div className="w-[50%] bg-yellow-300 text-center m-1 text-sm">
-            {getTotal("dureview-ans")} Review-Ans
+            {getTotal("review-ans")} Review-Ans
           </div>
         </div>
         <div className="flex">

@@ -1,5 +1,10 @@
-import { getColors, setAllColors } from "@/slices/colorSlice";
-import React, { useState } from "react";
+import {
+  getActiveQuestion,
+  getColors,
+  setActiveQuestion,
+  setAllColors,
+} from "@/slices/colorSlice";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionCard from "./QuestionCard";
 import { questions } from "@/constants/Constants";
@@ -7,19 +12,46 @@ import { questions } from "@/constants/Constants";
 const QuestionSection = () => {
   const dispatch = useDispatch();
   const colors = useSelector(getColors);
-  const [currentQ, setCurrentQ] = useState(colors[0].no);
+  const currentQ = useSelector(getActiveQuestion);
+  // const [currentQ, setCurrentQ] = useState(colors[0].no);
+
+  // useEffect(() => {
+  //   dispatch(setActiveQuestion(currentQ));
+  // }, [currentQ]);
+
+  const setCurrentQ = (val) => {
+    dispatch(setActiveQuestion(val));
+  };
 
   const handleClick = (newStatus) => {
-    const newColors = colors.map((obj) => {
-      
-      if (obj.no === currentQ) {
-        return { ...obj, status: newStatus };
+    let newColors;
+    if (newStatus === "clear") {
+      newColors = colors.map((obj) => {
+        if (obj.no === currentQ) {
+          return { ...obj, studentAnswer: null };
+        }
+        return obj;
+      });
+    } else {
+      if (newStatus === "next") {
+        if (colors[currentQ - 1].studentAnswer) newStatus = "answer";
+        else newStatus = "noAnswer";
       }
-      return obj;
-    });
+
+      if (newStatus === "review") {
+        if (colors[currentQ - 1].studentAnswer) newStatus = "review+ans";
+        else newStatus = "review-ans";
+      }
+      newColors = colors.map((obj) => {
+        if (obj.no === currentQ) {
+          return { ...obj, status: newStatus };
+        }
+        return obj;
+      });
+    }
     if (currentQ == 10) setCurrentQ(1);
     else setCurrentQ(currentQ + 1);
-    dispatch(setAllColors(newColors));
+    if (newColors) dispatch(setAllColors(newColors));
   };
   return (
     <div>
@@ -27,8 +59,22 @@ const QuestionSection = () => {
         <QuestionCard question={questions[currentQ - 1]} />
       </div>
       <div className="flex gap-1 px-1 pt-1 ml-2">
-        <p className="qSecButtons">CLEAR RESPONSE</p>
-        <p className="qSecButtons">REVIEW</p>
+        <p
+          onClick={() => {
+            handleClick("clear");
+          }}
+          className="qSecButtons"
+        >
+          CLEAR RESPONSE
+        </p>
+        <p
+          onClick={() => {
+            handleClick("review");
+          }}
+          className="qSecButtons"
+        >
+          REVIEW
+        </p>
         <p
           onClick={() => {
             handleClick("dump");
@@ -50,6 +96,7 @@ const QuestionSection = () => {
           onClick={() => {
             if (currentQ == 10) setCurrentQ(1);
             else setCurrentQ(currentQ + 1);
+            handleClick("next");
           }}
           className="qSecButtons"
         >
