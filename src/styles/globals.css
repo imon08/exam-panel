@@ -7,6 +7,6 @@
     @apply bg-blue-400 w-24 text-center text-white text-sm rounded-sm flex justify-center items-center cursor-pointer;
   }
   .qSecButtons {
-    @apply bg-blue-400 px-4 py-1 text-center text-white text-sm min-h-fit rounded-sm flex justify-center items-center cursor-pointer;
+    @apply bg-blue-400 px-4 py-1 text-center text-white text-sm min-h-fit rounded-sm flex justify-center items-center cursor-pointer active:bg-blue-300;
   }
 }

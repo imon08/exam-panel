@@ -4,7 +4,7 @@ import {
   setActiveQuestion,
   setAllColors,
 } from "@/slices/colorSlice";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionCard from "./QuestionCard";
 import { questions } from "@/constants/Constants";
@@ -13,11 +13,6 @@ const QuestionSection = () => {
   const dispatch = useDispatch();
   const colors = useSelector(getColors);
   const currentQ = useSelector(getActiveQuestion);
-  // const [currentQ, setCurrentQ] = useState(colors[0].no);
-
-  // useEffect(() => {
-  //   dispatch(setActiveQuestion(currentQ));
-  // }, [currentQ]);
 
   const setCurrentQ = (val) => {
     dispatch(setActiveQuestion(val));
@@ -48,9 +43,10 @@ const QuestionSection = () => {
         }
         return obj;
       });
+      if (currentQ == 10) setCurrentQ(1);
+      else setCurrentQ(currentQ + 1);
     }
-    if (currentQ == 10) setCurrentQ(1);
-    else setCurrentQ(currentQ + 1);
+
     if (newColors) dispatch(setAllColors(newColors));
   };
   return (
@@ -63,7 +59,7 @@ const QuestionSection = () => {
           onClick={() => {
             handleClick("clear");
           }}
-          className="qSecButtons"
+          className={`qSecButtons`}
         >
           CLEAR RESPONSE
         </p>
@@ -87,6 +83,7 @@ const QuestionSection = () => {
           onClick={() => {
             if (currentQ == 1) setCurrentQ(10);
             else setCurrentQ(currentQ - 1);
+            handleClick("prev");
           }}
           className="qSecButtons"
         >

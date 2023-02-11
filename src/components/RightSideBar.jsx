@@ -21,12 +21,12 @@ const RightSideBar = () => {
   };
 
   const statusColor = (status) => {
-    if (status === "answer") return "bg-green-200";
-    else if (status === "noAnswer") return "bg-red-200";
-    else if (status === "review+ans") return "bg-purple-200";
-    else if (status === "review-ans") return "bg-yellow-200";
-    else if (status === "dump") return "bg-gray-200";
-    else if (status === "noVisits") return "bg-white-200";
+    if (status === "answer") return "bg-green-300";
+    else if (status === "noAnswer") return "bg-red-300";
+    else if (status === "review+ans") return "bg-purple-300";
+    else if (status === "review-ans") return "bg-yellow-300";
+    else if (status === "dump") return "bg-gray-300";
+    else if (status === "noVisits") return "bg-white";
   };
 
   return (
@@ -43,7 +43,7 @@ const RightSideBar = () => {
                 onClick={() => dispatch(setActiveQuestion(item.no))}
                 key={item.no}
                 className={`px-4 py-1 ${statusColor(item.status)} ${
-                  currentQ === item.no ? "border-2 boder-black" : ""
+                  currentQ === item.no ? "border-2 border-black" : ""
                 } w-9 flex justify-center`}
               >
                 {item.no}
