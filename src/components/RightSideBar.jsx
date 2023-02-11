@@ -6,6 +6,7 @@ import {
   getColors,
   setActiveQuestion,
 } from "@/slices/colorSlice";
+import Link from "next/link";
 
 const RightSideBar = () => {
   const colors = useSelector(getColors);
@@ -91,9 +92,12 @@ const RightSideBar = () => {
           <button className="w-[46%] bg-[#4682B4] m-1 text-white rounded-sm py-1">
             Questions
           </button>
-          <button className="w-[46%] bg-[#4682B4] m-1 text-white rounded-sm py-1">
-            Submit
-          </button>
+          <Link
+            href="/result"
+            className="w-[46%] bg-[#4682B4] m-1 text-white rounded-sm py-1"
+          >
+            <button className="h-full w-full">Submit</button>
+          </Link>
         </div>
       </div>
     </div>
