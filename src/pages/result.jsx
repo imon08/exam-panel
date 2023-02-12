@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { questions } from "@/constants/Constants";
 import { useSelector } from "react-redux";
 import { getColors } from "@/slices/colorSlice";
+import Confetti from "react-confetti";
 
 const Result = () => {
   const colors = useSelector(getColors);
+  const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 10000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const getScore = () => {
     let score = 0;
@@ -34,6 +46,8 @@ const Result = () => {
 
   return (
     <div>
+      {showConfetti && <Confetti width={1500} height={800} />}
+
       <div className="text-3xl px-5 text-center m-5 ">
         <p className="p-2">Congratulations! You scored :</p>
         <p>{getScore()}/10</p>
